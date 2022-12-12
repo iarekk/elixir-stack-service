@@ -25,3 +25,4 @@ end
 # GenServer.call(pid, :peek)
 # GenServer.call(pid, :pop)
 # GenServer.cast(pid, {:push, 200})
+# :sys.statistics pid, :get
