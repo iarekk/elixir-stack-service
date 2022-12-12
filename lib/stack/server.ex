@@ -13,7 +13,6 @@ defmodule Stack.Server do
 
   def handle_call(:pop, _from, current_list) do
     {elem, new_list} = Impl.pop(current_list)
-    Stack.Stash.update(new_list)
     {:reply, elem, new_list}
   end
 
@@ -24,12 +23,12 @@ defmodule Stack.Server do
 
   def handle_cast({:push, elem}, current_list) do
     new_list = Impl.push(elem, current_list)
-    Stack.Stash.update(new_list)
     {:noreply, new_list}
   end
 
-  def terminate(reason, state) do
-    IO.puts("Terminating with reason #{inspect(reason)} and in state #{inspect(state)}")
+  def terminate(reason, current_list) do
+    IO.puts("Terminating with reason #{inspect(reason)} and in state #{inspect(current_list)}")
+    Stack.Stash.update(current_list)
   end
 end
 
