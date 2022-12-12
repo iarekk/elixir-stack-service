@@ -1,42 +1,24 @@
 defmodule Stack.Server do
   use GenServer
 
-  # External interface
-
-  def start_link(initial_list) do
-    GenServer.start_link(__MODULE__, initial_list, name: __MODULE__)
-  end
-
-  def pop() do
-    GenServer.call(__MODULE__, :pop)
-  end
-
-  def push(elem) do
-    GenServer.cast(__MODULE__, {:push, elem})
-  end
-
-  def peek() do
-    GenServer.call(__MODULE__, :peek)
-  end
-
-  # GenServer implementation
+  alias Stack.Impl
 
   def init(initial_list) do
     {:ok, initial_list}
   end
 
   def handle_call(:pop, _from, current_list) do
-    [elem | tail] = current_list
-    {:reply, elem, tail}
+    {elem, new_list} = Impl.pop(current_list)
+    {:reply, elem, new_list}
   end
 
   def handle_call(:peek, _from, current_list) do
-    [elem | _] = current_list
-    {:reply, elem, current_list}
+    {elem, new_list} = Impl.peek(current_list)
+    {:reply, elem, new_list}
   end
 
   def handle_cast({:push, elem}, current_list) do
-    {:noreply, [elem | current_list]}
+    {:noreply, Impl.push(elem, current_list)}
   end
 end
 
