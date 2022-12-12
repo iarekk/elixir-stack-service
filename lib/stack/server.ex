@@ -21,6 +21,7 @@ defmodule Stack.Server do
 end
 
 # {:ok, pid} = GenServer.start_link(Stack.Server, [1,2,3])
+# {:ok, pid} = GenServer.start_link(Stack.Server, [1,2,3], [debug: [:trace, :statistics]])
 # GenServer.call(pid, :peek)
 # GenServer.call(pid, :pop)
 # GenServer.cast(pid, {:push, 200})
