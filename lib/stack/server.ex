@@ -3,6 +3,10 @@ defmodule Stack.Server do
 
   alias Stack.Impl
 
+  def start_link(initial_list) do
+    GenServer.start_link(__MODULE__, initial_list, name: __MODULE__)
+  end
+
   def init(initial_list) do
     {:ok, initial_list}
   end
