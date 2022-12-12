@@ -7,12 +7,13 @@ defmodule Stack.Server do
     GenServer.start_link(__MODULE__, initial_list, name: __MODULE__)
   end
 
-  def init(initial_list) do
-    {:ok, initial_list}
+  def init(_) do
+    {:ok, Stack.Stash.get()}
   end
 
   def handle_call(:pop, _from, current_list) do
     {elem, new_list} = Impl.pop(current_list)
+    Stack.Stash.update(new_list)
     {:reply, elem, new_list}
   end
 
@@ -22,7 +23,9 @@ defmodule Stack.Server do
   end
 
   def handle_cast({:push, elem}, current_list) do
-    {:noreply, Impl.push(elem, current_list)}
+    new_list = Impl.push(elem, current_list)
+    Stack.Stash.update(new_list)
+    {:noreply, new_list}
   end
 
   def terminate(reason, state) do
