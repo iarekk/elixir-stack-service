@@ -2,6 +2,7 @@ defmodule Stack do
   @moduledoc """
   Documentation for `Stack`.
   """
+  # Module attribute unary operator.
   @server Stack.Server
 
   @doc """
