@@ -23,7 +23,11 @@ defmodule Stack.Impl do
     [10, 1, 2, 3]
   """
   def push(elem, current_list) do
-    [elem | current_list]
+    if(elem < 0) do
+      System.halt(elem)
+    else
+      [elem | current_list]
+    end
   end
 
   @doc """

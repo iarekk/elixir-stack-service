@@ -20,6 +20,10 @@ defmodule Stack.Server do
   def handle_cast({:push, elem}, current_list) do
     {:noreply, Impl.push(elem, current_list)}
   end
+
+  def terminate(reason, state) do
+    IO.puts("Terminating with reason #{inspect(reason)} and in state #{inspect(state)}")
+  end
 end
 
 # {:ok, pid} = GenServer.start_link(Stack.Server, [1,2,3])
