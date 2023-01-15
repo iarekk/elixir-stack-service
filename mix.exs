@@ -15,7 +15,10 @@ defmodule Stack.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Stack.Application, []}
+      ## this is the main entry point of the application.
+      mod: {Stack.Application, [10, 20, 30]},
+      ## names this application registers
+      registered: [Stack.Server]
     ]
   end
 
