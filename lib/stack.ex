@@ -1,25 +1,7 @@
 defmodule Stack do
-  @moduledoc """
-  Documentation for `Stack`.
-  """
-  # Module attribute unary operator.
   @server Stack.Server
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Stack.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
-
   def start_link(initial_list) do
-    GenServer.start_link(@server, initial_list, name: @server)
+    @server.start_link(initial_list)
   end
 
   def pop() do

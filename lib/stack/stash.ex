@@ -1,31 +1,17 @@
 defmodule Stack.Stash do
-  use GenServer
+  use Agent
+
   @me __MODULE__
 
-  @spec start_link(any) :: :ignore | {:error, any} | {:ok, pid}
   def start_link(initial_list) do
-    GenServer.start_link(@me, initial_list, name: @me)
+    Agent.start_link(fn -> initial_list end, name: @me)
   end
 
   def get() do
-    GenServer.call(@me, {:get})
+    Agent.get(@me, fn st -> st end)
   end
 
   def update(new_list) do
-    GenServer.cast(@me, {:update, new_list})
-  end
-
-  # GenServer implementation
-
-  def init(initial_list) do
-    {:ok, initial_list}
-  end
-
-  def handle_call({:get}, _from, current_list) do
-    {:reply, current_list, current_list}
-  end
-
-  def handle_cast({:update, new_list}, _current_list) do
-    {:noreply, new_list}
+    Agent.update(@me, fn _ -> new_list end)
   end
 end
